@@ -6,9 +6,6 @@ package edu.ncsu.csc316.hr.data;
  */
 public class Employee implements Comparable<Employee> {
 
-	// Years of service
-	
-	// Degree
 	private String first;
 	private String last;
 	private int resID;
@@ -44,6 +41,30 @@ public class Employee implements Comparable<Employee> {
 	public int getResID() {
 		return resID;
 	}
+
+	/**
+	 * @param first the first to set
+	 */
+	public void setFirst(String first) {
+		this.first = first;
+	}
+
+
+	/**
+	 * @param last the last to set
+	 */
+	public void setLast(String last) {
+		this.last = last;
+	}
+
+
+	/**
+	 * @param resID the resID to set
+	 */
+	public void setResID(int resID) {
+		this.resID = resID;
+	}
+
 
 	/**
 	 * 
