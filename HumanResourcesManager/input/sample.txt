@@ -1,0 +1,13 @@
+Sarah, Jones, R200581294
+( 
+   John, Smith, R000634703
+   Jane, Doe, R040123346
+   (
+      Thomas, Webb, R829476581
+      (
+         Jessica, Daniels, R228401745
+         Kyle, DeMarcino, R123582991
+      )
+   )
+   Suzanne, Meadows, R891429182
+)
