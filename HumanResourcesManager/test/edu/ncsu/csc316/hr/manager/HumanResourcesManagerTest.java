@@ -69,6 +69,34 @@ public class HumanResourcesManagerTest {
 				"]";
 		HumanResourcesManager hrm = new HumanResourcesManager("input/sample.txt", "input/sample-resume.txt");
 		assertEquals(exp1, hrm.generateOrganizationalProfile());
+		hrm = null;
+		hrm = new HumanResourcesManager("input/test-employees.txt", "input/test-resumes.txt");
+		String exp2 = "OrganizationalProfile[\n" +
+				"   Rob Smith\n" +
+				"   Maria Garcia\n" +
+				"   David Smith\n" +
+				"   Mary Smith\n" +
+				"   Noah Benveniste\n" +
+				"   James Johnson\n" + 
+				"   John Brown\n" +
+				"   Susan Hill\n" +
+				"   Maria Parker\n" +
+				"   Deb Roberts\n" +
+				"   Sandra Baker\n" +
+				"   Jeff Carter\n" +
+				"   Laura Evans\n" +
+				"   Sarah Baker\n" +
+				"   Jen Wilson\n" +
+				"   Brian Moore\n" +
+				"   Kevin Harris\n" +
+				"   Don Miller\n" +
+				"   David James\n" +
+				"   Carol Smith\n" + 
+				"   Pat Davids\n" +
+				"   Jason Adams\n" +
+				"   Jeff Scott\n" +
+				"]";
+		assertEquals(exp2, hrm.generateOrganizationalProfile());
 	}
 	
 }
