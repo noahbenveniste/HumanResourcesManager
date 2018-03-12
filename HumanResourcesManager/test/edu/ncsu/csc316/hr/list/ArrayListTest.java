@@ -287,4 +287,66 @@ public class ArrayListTest {
 		assertEquals(s, "c");
 		assertEquals("x", list.get(2));
 	}
+	
+	/**
+     * Tests the quickSort() method
+     */
+    @Test
+    public void testQuickSort() {
+        // Test sorting arrays with random ordering or things
+        ArrayList<Integer> ints = new ArrayList<Integer>();
+        ints.add(9);
+        ints.add(1);
+        ints.add(5);
+        ints.add(7);
+        ints.add(10);
+        ints.add(2);
+        ints.add(4);
+        ints.add(6);
+        ints.add(3);
+        ints.add(8);
+        
+        ints.quickSort();
+        
+        int[] expected1 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+        for (int i = 0; i < expected1.length; i++) {
+            assertTrue(expected1[i] == ints.get(i));
+        }
+        
+        ArrayList<String> list = new ArrayList<String>();
+        list.add("q");
+        list.add("g");
+        list.add("t");
+        list.add("c");
+        list.add("u");
+        list.add("v");
+        list.add("f");
+        list.add("w");
+        list.add("a");
+        list.add("o");
+        list.add("i");
+        list.add("j");
+        list.add("z");
+        list.add("n");
+        list.add("p");
+        list.add("h");
+        list.add("l");
+        list.add("y");
+        list.add("d");
+        list.add("r");
+        list.add("m");
+        list.add("e");
+        list.add("k");
+        list.add("s");
+        list.add("x");
+        list.add("b");
+        
+        list.quickSort();
+        
+        String[] expected2 = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"};
+        for (int i = 0; i < expected2.length; i++) {
+            assertEquals(expected2[i], list.get(i));
+        }
+    }
+    
 }
