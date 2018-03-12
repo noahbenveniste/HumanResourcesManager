@@ -163,39 +163,117 @@ public class HumanResourcesManager {
 	    // Search for the employee to remove. If they are not found, throw an exception
 		GeneralTree<Employee>.Node<Employee> e = null;
 		
+		// Initialize queue for level-order traversal
+		LinkedQueue<GeneralTree<Employee>.Node<Employee>> q = new LinkedQueue<GeneralTree<Employee>.Node<Employee>>(1000);
+		
+		// Enqueue root
+		q.enqueue(employees.getRoot());
+		
+		/* Visit a node by:
+		 1. Dequeueing the node
+		 2. Processing the node's data
+		 3. Enqueueing the node's children left to right
+		 4. Repeat until queue is empty */
+		
+		// While the queue has nodes to process
+		while (!q.isEmpty()) {
+			// Dequeue the next node to process
+			e = q.dequeue();
+			// Process the node's data
+			if (e.getData().getFirst().equals(first) && e.getData().getLast().equals(last)) {
+				break;
+			}
+			// Enqueue the node's children left to right
+			ArrayList<GeneralTree<Employee>.Node<Employee>> children = e.getChildren();
+			for (int i = 0; i < children.size(); i++) {
+				q.enqueue(children.get(i));
+			}
+		}
+		
 		if (e != null) {
 			// Remove the resume from the dictionary
 				// TODO: implement remove() method for BST
 			// Call method that handles recursion
-			return removeEmployeeHelper(e);
+			// TODO: need some way of only returning the name of the employee who directly
+			//		 replaced the removed employee
+			removeEmployeeHelper(e);
+			return new StringBuilder(e.getData().getFirst()).append(" ").append(e.getData().getLast()).toString();
 		} else {
 			return "Employee was not found";
 		}
 	}
 	
 	/**
+	 * Recursive helper method used for removing an employee and choosing an interim
+	 * replacement from those directly supervised by the employee.
 	 * 
-	 * @param e
+	 * @param e the Node corresponding to the employee to remove
 	 */
-	private String removeEmployeeHelper(GeneralTree<Employee>.Node<Employee> e) {
+	private void removeEmployeeHelper(GeneralTree<Employee>.Node<Employee> e) {
 		// Create a duplicate list of e's children
+		ArrayList<EmployeeSorter> sortedEmployees = new ArrayList<EmployeeSorter>();
 		
-		// Loop through the duplicate list and do the following for each node:
+		ArrayList<GeneralTree<Employee>.Node<Employee>> children = e.getChildren();
+		
+		// Loop through the child node list and do the following for each node:
 		// 1. Look up years of service and degree in dictionary
 		// 2. Get the number of immediate children of the current node
 		// 3. Somehow add this information to each element of the duplicate list
 			// TODO: add additional fields to the node class to store the above info
 		// 4. Sort the duplicate list
 			// TODO: add an optimized compareTo method for Employees
+		for (int i = 0; i < children.size(); i++) {
+			// Look up the resume for the current employee in the dictionary
+			Resume r = resumeDictionary.lookUp(e.getData().getResID());
+			
+			// Create a sorter object
+			EmployeeSorter curr = new EmployeeSorter(r.getYears(),
+													 children.get(i).getChildren().size(),
+													 r.getDegree(),
+													 e.getData().getLast(), 
+													 e.getData().getFirst());
+					
+			// Add the sorter object to the list
+			sortedEmployees.add(curr);
+		}
+		
+		// Sort the list of sorters
+		sortedEmployees.quickSort();
 		
 		/* The first employee in the sorted duplicate list is the one to promote.
 		   Replace the data in the node for the employee to be removed with the
 		   promoted employee. */
 		
+		// Find the node in the child list corresponding to the first EmployeeSorter in the sorted list
+		String promotedFirstName = sortedEmployees.get(0).getFirst();
+		String promotedLastName = sortedEmployees.get(0).getLast();
+		GeneralTree<Employee>.Node<Employee> promotedNode = null;
+		int idxToRemove = 0;
+		
+		for (int i = 0; i < children.size(); i++) {
+			if (children.get(i).getData().getFirst().equals(promotedFirstName) && children.get(i).getData().getLast().equals(promotedLastName)) {
+				promotedNode = children.get(i);
+				idxToRemove = 0;
+				break;
+			}
+		}
+		
+		// Overwrite the data in the passed node with the data of the promoted employee node
+		e.getData().setFirst(promotedFirstName);
+		e.getData().setLast(promotedLastName);
+		e.getData().setResID(promotedNode.getData().getResID());
+		
 		/* If the promoted employee has subordinates (i.e. its children array 
 		   isn't empty), perform a recursive call on the employee being promoted.
 		   Else, just delete the employee's node and return. */
-		return null;
+		
+		if (promotedNode.getChildren().size() != 0) {
+			removeEmployeeHelper(promotedNode);
+			return;
+		} else {
+			e.getChildren().remove(idxToRemove);
+			return;
+		}
 	}
 	
 	/**
