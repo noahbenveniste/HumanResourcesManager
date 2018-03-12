@@ -158,14 +158,57 @@ public class HumanResourcesManager {
 	 * @return the name of the employee who was promoted to interim supervisor
 	 */
 	public String removeEmployee(String first, String last) {
-	    // Search for the employee to remove
+	    // Search for the employee to remove. If they are not found, throw an exception
+		GeneralTree<Employee>.Node<Employee> e = null;
 		
-		// If the employee is found, sort its children based on the following criteria:
-		// 1. the years of service the employee in each child node has (look up in dictionary)
-		// 2. the number of child nodes each node in the child list has (from the node object)
-		// 3. degree (look up in dictionary)
-		// 4. last name (from the Employee object)
-		// 5. first name (from the Employee object)
+		if (e != null) {
+			// Remove the resume from the dictionary
+				// TODO: implement remove() method for BST
+			// Call method that handles recursion
+			return removeEmployeeHelper(e);
+		} else {
+			return "Employee was not found";
+		}
+	}
+	
+	/**
+	 * 
+	 * @param e
+	 */
+	private String removeEmployeeHelper(GeneralTree<Employee>.Node<Employee> e) {
+		// Create a duplicate list of e's children
+		
+		// Loop through the duplicate list and do the following for each node:
+		// 1. Look up years of service and degree in dictionary
+		// 2. Get the number of immediate children of the current node
+		// 3. Somehow add this information to each element of the duplicate list
+			// TODO: add additional fields to the node class to store the above info
+		// 4. Sort the duplicate list
+			// TODO: add an optimized compareTo method for Employees
+		
+		/* The first employee in the sorted duplicate list is the one to promote.
+		   Replace the data in the node for the employee to be removed with the
+		   promoted employee. */
+		
+		/* If the promoted employee has subordinates (i.e. its children array 
+		   isn't empty), perform a recursive call on the employee being promoted.
+		   Else, just delete the employee's node and return. */
+		return null;
+	}
+	
+	/**
+	 * 
+	 * @param visit
+	 */
+	private void levelOrderTraversal(Runnable visit) {
+		
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	private Employee getEmployee() {
 		return null;
 	}
 	
