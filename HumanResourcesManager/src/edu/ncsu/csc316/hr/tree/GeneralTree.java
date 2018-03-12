@@ -45,7 +45,7 @@ public class GeneralTree<E extends Comparable<E>> {
 	 * 
 	 * @author Noah Benveniste
 	 */
-	public class Node<E extends Comparable<E>> {
+	public class Node<E> implements Comparable<Node<E>>{
 		/** */
 		private E data;
 		/** */
@@ -66,6 +66,12 @@ public class GeneralTree<E extends Comparable<E>> {
 		 */
 		public ArrayList<Node<E>> getChildren() {
 			return this.children;
+		}
+
+		@Override
+		public int compareTo(Node<E> o) {
+			// TODO Auto-generated method stub
+			return 0;
 		}
 	}
 	

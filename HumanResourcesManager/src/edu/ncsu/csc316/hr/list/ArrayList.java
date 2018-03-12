@@ -14,7 +14,7 @@ import java.util.Random;
  * @author Kevin Hildner
  * 
  */
-public class ArrayList<E extends Comparable<? super E>> {
+public class ArrayList<E extends Comparable<E>> {
 	/**
 	 * The array's current size, based on the number of non-null elements present
 	 */

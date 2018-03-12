@@ -51,17 +51,20 @@ public class HumanResourcesManager {
 			resume.useDelimiter(", ");
 			
 			// TODO: possible performance improvements when reading in resume dictionary
-			
-			String id = resume.next();
-			int years = resume.nextInt();
-			char degree = resume.next().charAt(0);
-			
-			Resume r = new Resume(id, years, degree);
-			
-			// Insert the resume object into the BST as the value with the ID as the key
-			resumeDictionary.insert(r.getResID(), r);
-			// Close the scanner for the line
-			resume.close();
+			try {
+				String id = resume.next();
+				int years = resume.nextInt();
+				char degree = resume.next().charAt(0);
+				
+				Resume r = new Resume(id, years, degree);
+				
+				// Insert the resume object into the BST as the value with the ID as the key
+				resumeDictionary.insert(r.getResID(), r);
+				// Close the scanner for the line
+				resume.close();
+			} catch (NoSuchElementException e) {
+				// Do nothing
+			}
 		}
 		
 		// Close the file scanner
@@ -127,9 +130,7 @@ public class HumanResourcesManager {
 						Employee e = new Employee(employee.next().trim(), employee.next().trim(), employee.next().trim());
 						GeneralTree<Employee>.Node<Employee> eNode = employees.new Node<Employee>(e);
 						lastChildInstantiated = eNode;
-						
-						// TODO: add an insert to end method to arraylist class to improve performance here
-						parent.getChildren().add(parent.getChildren().size(), eNode);
+						parent.getChildren().add(eNode);
 						
 						// Increment the size of the employee tree
 						employees.incSize();
