@@ -41,5 +41,15 @@ public class HumanResourcesManagerTest {
 			assertEquals(expectedDictionary[i].getResID(), hrm.getResumeDictionary().lookUp((Integer) actualKeys[i]).getResID());
 		}
 		assertEquals(7, hrm.getEmployees().size());
+		
+		// Create a new manager using new input files
+		hrm = null;
+		hrm = new HumanResourcesManager("input/test-employees.txt", "input/test-resumes.txt");
+		// Check that the dictionary is ordered properly
+		actualKeys = hrm.getResumeDictionary().inOrder();
+		for (int i = 1; i < actualKeys.length; i++) {
+			assertTrue((Integer) actualKeys[i - 1] < (Integer) actualKeys[i]);
+		}
+		assertEquals(23, hrm.getEmployees().size());
 	}
 }
