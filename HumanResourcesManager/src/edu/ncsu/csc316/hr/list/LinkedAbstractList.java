@@ -3,7 +3,7 @@ package edu.ncsu.csc316.hr.list;
 /**
  * A custom implemented linked list. User can add elements to any index from 0 to size such that size
  * is less than or equal to the list's capacity.
- * @author Noah Benveniste
+ * @author Noah Benveniste, further edits made by Noah Benveniste for HumanResourcesManager
  * @author Kevin Hildner
  * @param <E> Indicates that the list can store any object type
  */
@@ -11,6 +11,8 @@ public class LinkedAbstractList<E> {
 
 	/** Reference that points to the node at the front of the list */
 	private ListNode front;
+	/** */
+	private ListNode back;
 	/** The number of elements in the list */
 	private int size;
 	/** The number of elements the list can store */
@@ -28,6 +30,7 @@ public class LinkedAbstractList<E> {
 			throw new IllegalArgumentException("Capacity cannot be less than current list's size.");
 		}
 		this.front = null;
+		this.back = null;
 		this.size = 0;
 		this.capacity = capacity;
 	}
@@ -61,6 +64,22 @@ public class LinkedAbstractList<E> {
 		if (idx < 0 || idx > this.size()) {
 			throw new IndexOutOfBoundsException("Index is outside the acceptable range.");
 		}
+		//Adding to the back of the list
+		if (idx == size ) {
+			// Make what the back pointer pointed to point to the new back (if its not null)
+			ListNode newBack = new ListNode(element, null);
+			if (back != null) {
+				back.next = newBack;
+				back = newBack;
+				size++;
+				return;
+			} else {
+				back = newBack;
+				front = newBack;
+				size++;
+				return;
+			}
+		}
 		//Adding to the front of the list
 		if (idx == 0) {
 			ListNode newFront = new ListNode(element, this.front); //Make the new node point to the old front
@@ -68,7 +87,7 @@ public class LinkedAbstractList<E> {
 			this.size++;
 			return;
 		}
-		//Adding to the middle or end of the list
+		//Adding to the middle of the list
 		current = this.front;
 		for (int i = 0; i < idx; i++) { //Traverse the list to get the reference to the old element at the index to add to
 			current = current.next;
