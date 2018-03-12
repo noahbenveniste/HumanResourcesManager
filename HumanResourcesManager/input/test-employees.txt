@@ -1,0 +1,41 @@
+Rob, Smith, R000012589
+(
+   Maria, Garcia, R890129459
+   David, Smith, R589102923
+   Mary, Smith, R000012745
+   (
+      James, Johnson, R213450901
+      John, Brown, R001247891
+      (
+         Jeff, Carter, R015928135
+      )
+      Susan, Hill, R125021931
+      (
+         Laura, Evans, R001345891
+         Sarah, Baker, R613487929
+         (
+            Kevin, Harris, R413980917
+            Don, Miller, R312897456
+            (
+               Carol, Smith, R271340910
+               Pat, Davids, R145789123
+               Jason, Adams, R231598720
+            )
+         )
+         Jen, Wilson, R523987345
+      )
+      Maria, Parker, R215789012
+      Deb, Roberts, R192312100
+      Sandra, Baker, R156943201
+      (
+         Brian, Moore, R178912451
+         (
+            David, James, R859387123
+            (
+               Jeff, Scott, R231897123
+            )
+         )
+      )
+   )
+   Noah, Benveniste, R659014364
+)

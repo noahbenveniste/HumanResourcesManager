@@ -59,11 +59,6 @@ public class ArrayList<E> {
 		if (idx < 0 || idx > this.size()) {
 			throw new IndexOutOfBoundsException("Index is outside the accepatble range");
 		}
-		for (int i = 0; i < this.size(); i++) {
-			if (this.list[i].equals(element)) {
-				throw new IllegalArgumentException("Cannot add repeat elements");
-			}
-		}
 		if (this.size() == this.capacity) { // Grow the array if list is full
 			this.growArray();
 		}
@@ -150,11 +145,6 @@ public class ArrayList<E> {
 		}
 		if (idx < 0 || idx >= this.size()) {
 			throw new IndexOutOfBoundsException("Index is outside the acceptable range");
-		}
-		for (int i = 0; i < this.size(); i++) {
-			if (this.list[i].equals(element)) {
-				throw new IllegalArgumentException("Cannot add duplicate elements");
-			}
 		}
 		E temp = list[idx];
 		list[idx] = element;
