@@ -52,4 +52,23 @@ public class HumanResourcesManagerTest {
 		}
 		assertEquals(23, hrm.getEmployees().size());
 	}
+	
+	/**
+	 * Tests the functionality for generating an organizational profile
+	 */
+	@Test
+	public void testGenerateOrganizationalProfile() {
+		String exp1 = "OrganizationalProfile[\n" + 
+				"   Sarah Jones\n" + 
+				"   John Smith\n" + 
+				"   Jane Doe\n" + 
+				"   Suzanne Meadows\n" + 
+				"   Thomas Webb\n" + 
+				"   Jessica Daniels\n" + 
+				"   Kyle DeMarcino\n" + 
+				"]";
+		HumanResourcesManager hrm = new HumanResourcesManager("input/sample.txt", "input/sample-resume.txt");
+		assertEquals(exp1, hrm.generateOrganizationalProfile());
+	}
+	
 }

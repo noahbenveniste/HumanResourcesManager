@@ -5,7 +5,9 @@ import java.io.FileNotFoundException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+import edu.ncsu.csc316.hr.adt.LinkedQueue;
 import edu.ncsu.csc316.hr.data.*;
+import edu.ncsu.csc316.hr.list.ArrayList;
 import edu.ncsu.csc316.hr.tree.*;
 
 /**
@@ -197,32 +199,46 @@ public class HumanResourcesManager {
 	}
 	
 	/**
-	 * 
-	 * @param visit
-	 */
-	private void levelOrderTraversal(Runnable visit) {
-		
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	private Employee getEmployee() {
-		return null;
-	}
-	
-	/**
 	 * Returns the string representation of the organizational
 	 * profile of the company using the given input employee file.
 	 * 
 	 * @return the organizational profile
 	 */
 	public String generateOrganizationalProfile() {
-		/* Need to perform a level-order traversal of the general tree.
-		   Use a linked list-based queue. */
-	    // TODO: Add your code here
-		return null;
+		// Initialize queue
+		LinkedQueue<GeneralTree<Employee>.Node<Employee>> q = new LinkedQueue<GeneralTree<Employee>.Node<Employee>>(1000);
+		
+		// Initialize current node pointer
+		GeneralTree<Employee>.Node<Employee> curr = null;
+		
+		// Initialize string builder
+		StringBuilder sb = new StringBuilder("OrganizationalProfile[\n");
+		
+		// Enqueue root
+		q.enqueue(employees.getRoot());
+		
+		/* Visit a node by:
+		 1. Dequeueing the node
+		 2. Processing the node's data
+		 3. Enqueueing the node's children left to right
+		 4. Repeat until queue is empty */
+		
+		// While the queue has nodes to process
+		while (!q.isEmpty()) {
+			// Dequeue the next node to process
+			curr = q.dequeue();
+			// Process the node's data
+			sb.append(curr.getData().toString());
+			// Enqueue the node's children left to right
+			ArrayList<GeneralTree<Employee>.Node<Employee>> children = curr.getChildren();
+			for (int i = 0; i < children.size(); i++) {
+				q.enqueue(children.get(i));
+			}
+		}
+		sb.append("]");
+		
+		// Return the contents of the string builder
+		return sb.toString();
 	}
 	
 	/**

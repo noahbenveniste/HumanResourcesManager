@@ -117,6 +117,9 @@ public class LinkedAbstractList<E> {
 			E oldData = front.data;
 			front = front.next;
 			this.size--;
+			if (size == 0) {
+				back = null;
+			}
 			return oldData;
 		}
 		//Removing from the middle or end of the list

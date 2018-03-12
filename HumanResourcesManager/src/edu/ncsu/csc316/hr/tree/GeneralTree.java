@@ -67,7 +67,18 @@ public class GeneralTree<E extends Comparable<E>> {
 		public ArrayList<Node<E>> getChildren() {
 			return this.children;
 		}
+		
+		/**
+		 * 
+		 * @return
+		 */
+		public E getData() {
+			return this.data;
+		}
 
+		/**
+		 * 
+		 */
 		@Override
 		public int compareTo(Node<E> o) {
 			// TODO Auto-generated method stub

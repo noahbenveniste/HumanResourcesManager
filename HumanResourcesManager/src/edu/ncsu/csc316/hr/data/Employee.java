@@ -45,6 +45,14 @@ public class Employee implements Comparable<Employee> {
 		return resID;
 	}
 
+	/**
+	 * 
+	 */
+	public String toString() {
+		StringBuilder sb = new StringBuilder("   ");
+		sb.append(this.first).append(" ").append(this.last).append("\n");
+		return sb.toString();
+	}
 
 	/**
 	 * 
