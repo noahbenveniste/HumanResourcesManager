@@ -28,7 +28,7 @@ public class Resume implements Comparable<Resume> {
 		} else if (degree == 'M') {
 			this.degree = 3;
 		} else {
-			degree = 4;
+			this.degree = 4;
 		}
 	}
 
