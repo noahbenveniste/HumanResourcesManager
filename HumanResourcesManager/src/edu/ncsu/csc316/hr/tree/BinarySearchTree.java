@@ -120,6 +120,12 @@ public class BinarySearchTree<S extends Comparable<S>, T extends Comparable<T>> 
 		// Removing the root
 		} else if (k.equals(root.key)) {
 			T temp = root.value;
+			// If the root doesn't have a left subtree
+			if (root.left == null) {
+				root = root.right;
+				size--;
+				return temp;
+			}
 			Node<S, T> curr = root.left;
 			Node<S, T> max = getMaxNode(curr);
 			
@@ -132,10 +138,7 @@ public class BinarySearchTree<S extends Comparable<S>, T extends Comparable<T>> 
 			root.key = replaceKey;
 			
 			// Remove the duplicate leaf node
-			curr.right = null;
-			
-			// Don't forget to decrement size
-			size--;
+			curr.removeHelper(replaceKey, root);
 			
 			// Return out
 			return temp;
@@ -306,10 +309,7 @@ public class BinarySearchTree<S extends Comparable<S>, T extends Comparable<T>> 
 						this.key = replaceKey;
 						
 						// Remove the duplicate leaf node
-						max.right = null;
-						
-						// Don't forget to decrement size
-						size--;
+						curr.removeHelper(replaceKey, this);
 						
 						// Return out
 						return temp;

@@ -21,8 +21,9 @@ public class BinarySearchTreeTest {
 	private String[] values = {"ape", "bird", "cat", "dog", "fox", "goat", "hen", "pig", "rat"};
 	
 	/**
+	 * Initializes an empty BST for testing
 	 * 
-	 * @throws Exception
+	 * @throws Exception if binary tree cannot be initialized
 	 */
 	@Before
 	public void setUp() throws Exception {
@@ -30,8 +31,9 @@ public class BinarySearchTreeTest {
 	}
 
 	/**
-	 * 
+	 * Tests insert functionality for BST
 	 */
+	@SuppressWarnings("rawtypes")
 	@Test
 	public void testInsert() {
 		assertEquals(0, binTree.size());
@@ -54,14 +56,30 @@ public class BinarySearchTreeTest {
 		for (int i = 0; i < actual2.length; i++) {
 			assertEquals(keys[i], actual2[i]);
 		}
+		
+		// Try inserting a duplicate key
+		try {
+			binTree.insert(7, "lizard");
+			fail();
+		} catch (IllegalArgumentException e) {
+			assertEquals("Cannot insert duplicate elements into BST", e.getMessage());
+		}
 	}
 	
 	/**
-	 * 
+	 * Tests look up functionality for BST
 	 */
 	@Test
 	public void testLookUp() {
 		assertEquals(0, binTree.size());
+		// Try looking up in empty BST
+		try {
+			binTree.lookUp(1);
+			fail();
+		} catch (IllegalArgumentException e) {
+			assertEquals("BST is empty", e.getMessage());
+		}
+		
 		binTree.insert(5, "fox");
 		binTree.insert(3, "cat");
 		binTree.insert(2, "bird");
@@ -74,11 +92,27 @@ public class BinarySearchTreeTest {
 		for (int i = 0; i < values.length; i++) {
 			assertEquals(values[i], binTree.lookUp(i + 1));
 		}
+		
+		// Try looking up keys not in the tree
+		try {
+			binTree.lookUp(-1);
+			fail();
+		} catch (IllegalArgumentException e) {
+			assertEquals("Key is not contained in the BST", e.getMessage());
+		}
+		
+		try {
+			binTree.lookUp(100);
+			fail();
+		} catch (IllegalArgumentException e) {
+			assertEquals("Key is not contained in the BST", e.getMessage());
+		}
 	}
 	
 	/**
 	 * 
 	 */
+	@SuppressWarnings("unchecked")
 	@Test
 	public void testRemove() {
 		// Insert to the tree
@@ -168,6 +202,149 @@ public class BinarySearchTreeTest {
 		
 		assertEquals("cat", binTree.remove(3));
 		assertEquals(0, binTree.size());
+		
+		/* Test a random sequence of inserts and removals */
+		
+		binTree = null;
+		binTree = new BinarySearchTree<Integer, String>();
+		String v = "";
+		
+		// Try removing from an empty BST
+		try {
+			binTree.remove(1);
+			fail();
+		} catch (IllegalArgumentException e) {
+			assertEquals("BST is empty", e.getMessage());
+		}
+		
+		binTree.insert(13, v);
+		assertEquals(1, binTree.size());
+		assertTrue(validate(new Comparable[] {13}, binTree.inOrder()));
+		
+		binTree.insert(5, v);
+		assertEquals(2, binTree.size());
+		assertTrue(validate(new Comparable[] {5, 13}, binTree.inOrder()));
+		
+		binTree.insert(18, v);
+		assertEquals(3, binTree.size());
+		assertTrue(validate(new Comparable[] {5, 13, 18}, binTree.inOrder()));
+		
+		binTree.remove(13);
+		assertEquals(2, binTree.size());
+		validate(new Comparable[] {5, 18}, binTree.inOrder());
+		
+		binTree.insert(4, v);
+		assertEquals(3, binTree.size());
+		validate(new Comparable[] {4, 5, 18}, binTree.inOrder());
+		
+		binTree.remove(18);
+		assertEquals(2, binTree.size());
+		validate(new Comparable[] {4, 5}, binTree.inOrder());
+		
+		binTree.remove(4);
+		assertEquals(1, binTree.size());
+		validate(new Comparable[] {5}, binTree.inOrder());
+		
+		binTree.insert(3, v);
+		assertEquals(2, binTree.size());
+		validate(new Comparable[] {3, 5}, binTree.inOrder());
+		
+		binTree.remove(5);
+		assertEquals(1, binTree.size());
+		validate(new Comparable[] {3}, binTree.inOrder());
+		
+		binTree.insert(10, v);
+		assertEquals(2, binTree.size());
+		validate(new Comparable[] {3, 10}, binTree.inOrder());
+		
+		binTree.remove(3);
+		assertEquals(1, binTree.size());
+		validate(new Comparable[] {10}, binTree.inOrder());
+		
+		binTree.insert(5, v);
+		binTree.insert(13, v);
+		binTree.insert(1, v);
+		binTree.insert(7, v);
+		binTree.insert(12, v);
+		binTree.insert(20, v);
+		binTree.insert(0, v);
+		binTree.insert(2, v);
+		binTree.insert(6, v);
+		binTree.insert(8, v);
+		binTree.insert(11, v);
+		binTree.insert(9, v);
+		binTree.insert(16, v);
+		binTree.insert(18, v);
+		binTree.insert(14, v);
+		binTree.insert(19, v);
+		binTree.insert(3, v);
+		binTree.insert(4, v);
+		binTree.insert(15, v);
+		binTree.insert(17, v);
+		
+		assertEquals(21, binTree.size());
+		validate(new Comparable[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20}, binTree.inOrder());
+		
+		// Try removing keys not in the tree
+		try {
+			binTree.remove(-1);
+			fail();
+		} catch(IllegalArgumentException e) {
+			assertEquals("Key is not contained in the BST", e.getMessage());
+		}
+		
+		try {
+			binTree.remove(100);
+			fail();
+		} catch(IllegalArgumentException e) {
+			assertEquals("Key is not contained in the BST", e.getMessage());
+		}
+		
+		binTree.remove(20);
+		assertEquals(20, binTree.size());
+		validate(new Comparable[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19}, binTree.inOrder());
+		
+		binTree.remove(0);
+		assertEquals(19, binTree.size());
+		validate(new Comparable[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19}, binTree.inOrder());
+		
+		binTree.insert(-5, v);
+		binTree.insert(-3, v);
+		assertEquals(21, binTree.size());
+		validate(new Comparable[] {-5, -3, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19}, binTree.inOrder());
+		
+		binTree.remove(-5);
+		assertEquals(20, binTree.size());
+		validate(new Comparable[] {-3, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19}, binTree.inOrder());
+		
+		binTree.remove(8);
+		assertEquals(19, binTree.size());
+		validate(new Comparable[] {-3, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19}, binTree.inOrder());
+		
+		binTree.remove(12);
+		assertEquals(18, binTree.size());
+		validate(new Comparable[] {-3, 2, 3, 4, 5, 6, 7, 9, 10, 11, 13, 14, 15, 16, 17, 18, 19}, binTree.inOrder());
+		
+	}
+	
+	/**
+	 * Helper method used to validate the contents of a binary search tree
+	 * using an in-order traversal
+	 * 
+	 * @param exp the expected array of keys in order
+	 * @param act the actual array of keys generated from the in-order traversal
+	 * 
+	 * @return true if exp and act match element for element, false otherwise
+	 */
+	private boolean validate(Comparable<Integer>[] exp, Comparable<Integer>[] act) {
+		if (exp.length != act.length) {
+			return false;
+		} else {
+			for (int i = 0; i < exp.length; i++) {
+				assertEquals(exp[i], act[i]);
+			}
+		}
+		return true;
 	}
 
 }
