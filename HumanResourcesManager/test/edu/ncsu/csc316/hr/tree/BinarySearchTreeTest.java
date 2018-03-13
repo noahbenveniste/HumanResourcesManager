@@ -341,7 +341,23 @@ public class BinarySearchTreeTest {
 		binTree.insert(-11, v);
 		binTree.insert(23, v);
 		assertEquals(19, binTree.size());
-		validate(new Comparable[] {-11, -3, 1, 2, 4, 5, 6, 7, 8, 9, 10, 13, 14, 15, 17, 18, 19, 23, 50}, binTree.inOrder());
+		assertTrue(validate(new Comparable[] {-11, -3, 1, 2, 4, 5, 6, 7, 8, 9, 10, 13, 14, 15, 17, 18, 19, 23, 50}, binTree.inOrder()));
+		
+		binTree.remove(6);
+		assertEquals(18, binTree.size());
+		assertTrue(validate(new Comparable[] {-11, -3, 1, 2, 4, 5, 7, 8, 9, 10, 13, 14, 15, 17, 18, 19, 23, 50}, binTree.inOrder()));
+		
+		binTree.remove(14);
+		assertEquals(17, binTree.size());
+		assertTrue(validate(new Comparable[] {-11, -3, 1, 2, 4, 5, 7, 8, 9, 10, 13, 15, 17, 18, 19, 23, 50}, binTree.inOrder()));
+		
+		binTree.remove(4);
+		assertEquals(16, binTree.size());
+		assertTrue(validate(new Comparable[] {-11, -3, 1, 2, 5, 7, 8, 9, 10, 13, 15, 17, 18, 19, 23, 50}, binTree.inOrder()));
+		
+		binTree.remove(1);
+		assertEquals(15, binTree.size());
+		assertTrue(validate(new Comparable[] {-11, -3, 2, 5, 7, 8, 9, 10, 13, 15, 17, 18, 19, 23, 50}, binTree.inOrder()));
 		
 	}
 	

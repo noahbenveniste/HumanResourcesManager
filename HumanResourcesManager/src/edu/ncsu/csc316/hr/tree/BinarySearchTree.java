@@ -299,7 +299,7 @@ public class BinarySearchTree<S extends Comparable<S>, T extends Comparable<T>> 
 				} else {
 					// Iterate through the left subtree to the right-most element
 					Node<S, T> curr = this.left;
-					if (curr.right == null) {
+					if (curr.right == null && this.right == null) {
 						if (parent.left.equals(this)) {
 							parent.left = curr;
 						} else {
