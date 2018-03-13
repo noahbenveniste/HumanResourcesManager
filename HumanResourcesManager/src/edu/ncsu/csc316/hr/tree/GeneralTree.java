@@ -81,7 +81,6 @@ public class GeneralTree<E extends Comparable<E>> {
 		 */
 		@Override
 		public int compareTo(Node<E> o) {
-			// TODO Auto-generated method stub
 			return 0;
 		}
 	}
