@@ -4,7 +4,7 @@ package edu.ncsu.csc316.hr.tree;
  * 
  * @author Noah Benveniste
  *
- * @param <E>
+ * @param <S, T>
  */
 public class BinarySearchTree<S extends Comparable<S>, T extends Comparable<T>> {
 	
@@ -47,9 +47,6 @@ public class BinarySearchTree<S extends Comparable<S>, T extends Comparable<T>> 
 		// If the tree is empty, create a new root.
 		if (root == null) {
 			root = new Node<S, T>(k, v);
-			root.isRoot = true;
-			root.isLeaf = true;
-			root.isInternal = false;
 			size++;
 		} else {
 			try {
@@ -103,9 +100,50 @@ public class BinarySearchTree<S extends Comparable<S>, T extends Comparable<T>> 
 	 * 
 	 */
 	public T remove(S k) {
-		// TODO Auto-generated method stub
-		return null;
+		/* REMOVE ALGORITHM */
+		// 1. Find the node corresponding to the searched key
+		// 2. Find the largest element in the left subtree of the node
+		// 3. Replace the data in the node with the data in the largest element of the left subtree
+		// 4. Delete the node corresponding to the largest element in the left subtree
+		// 5. Decrement size
+		// Special cases: A key is not found (throw an exception), the node containing k is a leaf or only has one subtree
+		
+		// Tree is empty
+		if (isEmpty()) {
+			throw new IllegalArgumentException("BST is empty");
+		// Tree only contains root
+		} else if (this.size == 1) {
+			T temp = root.value;
+			root = null;
+			size--;
+			return temp;
+		// Removing the root
+		} else if (k.equals(root.key)) {
+			T temp = root.value;
+			Node<S, T> curr = root.left;
+			Node<S, T> max = getMaxNode(curr);
+			
+			// Grab the element, save it
+			T replaceData = max.value;
+			S replaceKey = max.key;
+			
+			// Set this node to contain the saved data
+			root.value = replaceData;
+			root.key = replaceKey;
+			
+			// Remove the duplicate leaf node
+			curr.right = null;
+			
+			// Don't forget to decrement size
+			size--;
+			
+			// Return out
+			return temp;
+		} else {
+			return root.removeHelper(k, null);
+		}
 	}
+	
 
 	/**
 	 * 
@@ -121,33 +159,17 @@ public class BinarySearchTree<S extends Comparable<S>, T extends Comparable<T>> 
 	public int size() {
 		return size;
 	}
-
+	
 	/**
 	 * 
 	 * @return
 	 */
-	public boolean isRoot() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	/**
-	 * 
-	 * @return
-	 */
-	public boolean isLeaf() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-
-	/**
-	 * 
-	 * @return
-	 */
-	public boolean isInternal() {
-		// TODO Auto-generated method stub
-		return false;
+	public Node<S, T> getMaxNode(Node<S, T> curr) {
+		if (curr.right == null) {
+			return curr;
+		} else {
+			return getMaxNode(curr.right);
+		}
 	}
 	
 	/**
@@ -156,6 +178,7 @@ public class BinarySearchTree<S extends Comparable<S>, T extends Comparable<T>> 
 	 *
 	 * @param <E>
 	 */
+	@SuppressWarnings("hiding")
 	private class Node<S extends Comparable<S>, T extends Comparable<T>> {
 		
 		/** */
@@ -166,12 +189,6 @@ public class BinarySearchTree<S extends Comparable<S>, T extends Comparable<T>> 
 		public S key;
 		/** */
 		public T value;
-		/** */
-		private boolean isInternal;
-		/** */
-		private boolean isLeaf;
-		/** */
-		private boolean isRoot;
 		
 		/**
 		 * 
@@ -242,6 +259,86 @@ public class BinarySearchTree<S extends Comparable<S>, T extends Comparable<T>> 
 				} else {
 					return right.lookUpHelper(k);
 				}
+			}
+		}
+		
+		/**
+		 * 
+		 * @param k
+		 * @return
+		 */
+		private T removeHelper(S k, Node<S, T> parent) {
+			if (this.key.equals(k)) {
+				// Save the data to return
+				T temp = this.value;
+				// If the node to delete is a leaf or doesn't have a left subtree
+				if ((this.left == null && this.right == null) || this.left == null) {
+					if (this.equals(parent.left)) {
+						parent.left = null;
+						size--;
+						return temp;
+					} else {
+						parent.right = null;
+						size--;
+						return temp;
+					}
+				// The node to delete has a left subtree to search
+				} else {
+					// Iterate through the left subtree to the right-most element
+					Node<S, T> curr = this.left;
+					if (curr.right == null) {
+						if (parent.left.equals(this)) {
+							parent.left = curr;
+						} else {
+							parent.right = curr;
+						}
+						size--;
+						return temp;
+					} else {
+						Node<S, T> max = getMaxNode(curr);
+						
+						// Grab the element, save it
+						T replaceData = max.value;
+						S replaceKey = max.key;
+						
+						// Set this node to contain the saved data
+						this.value = replaceData;
+						this.key = replaceKey;
+						
+						// Remove the duplicate leaf node
+						max.right = null;
+						
+						// Don't forget to decrement size
+						size--;
+						
+						// Return out
+						return temp;
+					}
+				}
+			} else if (this.key.compareTo(k) > 0) {
+				if (this.left == null) {
+					throw new IllegalArgumentException("Key is not contained in the BST");
+				} else {
+					return left.removeHelper(k, this);
+				}
+			} else {
+				if (this.right == null) {
+					throw new IllegalArgumentException("Key is not contained in the BST");
+				} else {
+					return right.removeHelper(k, this);
+				}
+			}
+		}
+		
+		/**
+		 * 
+		 * @return
+		 */
+		public Node<S, T> getMaxNode(Node<S, T> curr) {
+			if (curr.right == null) {
+				return curr;
+			} else {
+				return getMaxNode(curr.right);
 			}
 		}
 		
