@@ -99,4 +99,29 @@ public class HumanResourcesManagerTest {
 		assertEquals(exp2, hrm.generateOrganizationalProfile());
 	}
 	
+	/**
+	 * 
+	 */
+	@Test
+	public void testRemoveEmployee() {
+		HumanResourcesManager hrm = new HumanResourcesManager("input/sample.txt", "input/sample-resume.txt");
+		// Test removing CEO
+		assertEquals("Jane Doe", hrm.removeEmployee("Sarah", "Jones"));
+		String exp1 = "OrganizationalProfile[\n" + 
+				"   Jane Doe\n" + 
+				"   John Smith\n" + 
+				"   Thomas Webb\n" + 
+				"   Suzanne Meadows\n" + 
+				"   Jessica Daniels\n" + 
+				"   Kyle DeMarcino\n" + 
+				"]";
+		assertEquals(exp1, hrm.generateOrganizationalProfile());
+		try {
+			hrm.getResumeDictionary().lookUp(200481294);
+			fail();
+		} catch (IllegalArgumentException e) {
+			assertEquals("Key is not contained in the BST", e.getMessage());
+		}
+	}
+	
 }

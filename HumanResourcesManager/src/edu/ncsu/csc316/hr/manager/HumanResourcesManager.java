@@ -191,12 +191,12 @@ public class HumanResourcesManager {
 		}
 		
 		if (e != null) {
-			// Remove the resume from the dictionary
-				// TODO: implement remove() method for BST
 			// Call method that handles recursion
 			// TODO: need some way of only returning the name of the employee who directly
 			//		 replaced the removed employee
 			removeEmployeeHelper(e);
+			// Remove the resume from the dictionary
+			resumeDictionary.remove(e.getData().getResID());
 			return new StringBuilder(e.getData().getFirst()).append(" ").append(e.getData().getLast()).toString();
 		} else {
 			return "Employee was not found";
@@ -223,18 +223,19 @@ public class HumanResourcesManager {
 		// 4. Sort the duplicate list
 			// TODO: add an optimized compareTo method for Employees
 		for (int i = 0; i < children.size(); i++) {
+			// Current child being examined
+			GeneralTree<Employee>.Node<Employee> curr = children.get(i);
 			// Look up the resume for the current employee in the dictionary
-			Resume r = resumeDictionary.lookUp(e.getData().getResID());
-			
+			Resume r = resumeDictionary.lookUp(curr.getData().getResID());
 			// Create a sorter object
-			EmployeeSorter curr = new EmployeeSorter(r.getYears(),
+			EmployeeSorter currSorter = new EmployeeSorter(r.getYears(),
 													 children.get(i).getChildren().size(),
 													 r.getDegree(),
-													 e.getData().getLast(), 
-													 e.getData().getFirst());
+													 curr.getData().getLast(), 
+													 curr.getData().getFirst());
 					
 			// Add the sorter object to the list
-			sortedEmployees.add(curr);
+			sortedEmployees.add(currSorter);
 		}
 		
 		// Sort the list of sorters

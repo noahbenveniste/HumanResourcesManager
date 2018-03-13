@@ -251,16 +251,4 @@ public class ArrayList<E extends Comparable<E>> {
         quickSortHelper(first, high); // subarray right of the pivot
     }
     
-    /**
-     * Returns a duplicate of the list
-     * @return a duplicate of the list in its current state
-     */
-    public ArrayList<E> copyList() {
-    	ArrayList<E> out = new ArrayList<E>();
-    	for (int i = 0; i < size; i++) {
-    		out.add(i, list[i]);
-    	}
-    	return out;
-    }
-    
 }
