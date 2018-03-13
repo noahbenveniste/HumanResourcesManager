@@ -198,7 +198,9 @@ public class HumanResourcesManager {
 			//		 replaced the removed employee
 			removeEmployeeHelper(e, parent);
 			// Remove the resume from the dictionary
-			resumeDictionary.remove(e.getData().getResID());
+			if (!resumeDictionary.isEmpty()) {
+				resumeDictionary.remove(e.getData().getResID());
+			}
 			return new StringBuilder(e.getData().getFirst()).append(" ").append(e.getData().getLast()).toString();
 		} else {
 			return "Employee was not found";
