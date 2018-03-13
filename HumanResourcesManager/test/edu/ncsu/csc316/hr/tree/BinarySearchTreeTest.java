@@ -5,19 +5,18 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import edu.ncsu.csc316.hr.tree.*;
-
 /**
+ * Test class for BinarySearchTree functionality
  * 
  * @author Noah Benveniste
  */
 public class BinarySearchTreeTest {
 
-	/** */
+	/** BST to be used throughout tests */
 	private BinarySearchTree<Integer, String> binTree;
-	/** */
+	/** List of keys to be used for tests */
 	private int[] keys = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-	/** */
+	/** List of values to be used for tests */
 	private String[] values = {"ape", "bird", "cat", "dog", "fox", "goat", "hen", "pig", "rat"};
 	
 	/**
@@ -110,7 +109,7 @@ public class BinarySearchTreeTest {
 	}
 	
 	/**
-	 * 
+	 * Tests remove functionality for BST
 	 */
 	@SuppressWarnings("unchecked")
 	@Test
@@ -231,35 +230,35 @@ public class BinarySearchTreeTest {
 		
 		binTree.remove(13);
 		assertEquals(2, binTree.size());
-		validate(new Comparable[] {5, 18}, binTree.inOrder());
+		assertTrue(validate(new Comparable[] {5, 18}, binTree.inOrder()));
 		
 		binTree.insert(4, v);
 		assertEquals(3, binTree.size());
-		validate(new Comparable[] {4, 5, 18}, binTree.inOrder());
+		assertTrue(validate(new Comparable[] {4, 5, 18}, binTree.inOrder()));
 		
 		binTree.remove(18);
 		assertEquals(2, binTree.size());
-		validate(new Comparable[] {4, 5}, binTree.inOrder());
+		assertTrue(validate(new Comparable[] {4, 5}, binTree.inOrder()));
 		
 		binTree.remove(4);
 		assertEquals(1, binTree.size());
-		validate(new Comparable[] {5}, binTree.inOrder());
+		assertTrue(validate(new Comparable[] {5}, binTree.inOrder()));
 		
 		binTree.insert(3, v);
 		assertEquals(2, binTree.size());
-		validate(new Comparable[] {3, 5}, binTree.inOrder());
+		assertTrue(validate(new Comparable[] {3, 5}, binTree.inOrder()));
 		
 		binTree.remove(5);
 		assertEquals(1, binTree.size());
-		validate(new Comparable[] {3}, binTree.inOrder());
+		assertTrue(validate(new Comparable[] {3}, binTree.inOrder()));
 		
 		binTree.insert(10, v);
 		assertEquals(2, binTree.size());
-		validate(new Comparable[] {3, 10}, binTree.inOrder());
+		assertTrue(validate(new Comparable[] {3, 10}, binTree.inOrder()));
 		
 		binTree.remove(3);
 		assertEquals(1, binTree.size());
-		validate(new Comparable[] {10}, binTree.inOrder());
+		assertTrue(validate(new Comparable[] {10}, binTree.inOrder()));
 		
 		binTree.insert(5, v);
 		binTree.insert(13, v);
@@ -283,7 +282,7 @@ public class BinarySearchTreeTest {
 		binTree.insert(17, v);
 		
 		assertEquals(21, binTree.size());
-		validate(new Comparable[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20}, binTree.inOrder());
+		assertTrue(validate(new Comparable[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20}, binTree.inOrder()));
 		
 		// Try removing keys not in the tree
 		try {
@@ -302,28 +301,47 @@ public class BinarySearchTreeTest {
 		
 		binTree.remove(20);
 		assertEquals(20, binTree.size());
-		validate(new Comparable[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19}, binTree.inOrder());
+		assertTrue(validate(new Comparable[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19}, binTree.inOrder()));
 		
 		binTree.remove(0);
 		assertEquals(19, binTree.size());
-		validate(new Comparable[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19}, binTree.inOrder());
+		assertTrue(validate(new Comparable[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19}, binTree.inOrder()));
 		
 		binTree.insert(-5, v);
 		binTree.insert(-3, v);
 		assertEquals(21, binTree.size());
-		validate(new Comparable[] {-5, -3, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19}, binTree.inOrder());
+		assertTrue(validate(new Comparable[] {-5, -3, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19}, binTree.inOrder()));
 		
 		binTree.remove(-5);
 		assertEquals(20, binTree.size());
-		validate(new Comparable[] {-3, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19}, binTree.inOrder());
+		assertTrue(validate(new Comparable[] {-3, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19}, binTree.inOrder()));
 		
 		binTree.remove(8);
 		assertEquals(19, binTree.size());
-		validate(new Comparable[] {-3, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19}, binTree.inOrder());
+		assertTrue(validate(new Comparable[] {-3, 1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19}, binTree.inOrder()));
 		
 		binTree.remove(12);
 		assertEquals(18, binTree.size());
-		validate(new Comparable[] {-3, 2, 3, 4, 5, 6, 7, 9, 10, 11, 13, 14, 15, 16, 17, 18, 19}, binTree.inOrder());
+		assertTrue(validate(new Comparable[] {-3, 1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 13, 14, 15, 16, 17, 18, 19}, binTree.inOrder()));
+		
+		binTree.remove(16);
+		assertEquals(17, binTree.size());
+		assertTrue(validate(new Comparable[] {-3, 1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 13, 14, 15, 17, 18, 19}, binTree.inOrder()));
+		
+		binTree.remove(3);
+		assertEquals(16, binTree.size());
+		assertTrue(validate(new Comparable[] {-3, 1, 2, 4, 5, 6, 7, 9, 10, 11, 13, 14, 15, 17, 18, 19}, binTree.inOrder()));
+		
+		binTree.remove(11);
+		assertEquals(15, binTree.size());
+		assertTrue(validate(new Comparable[] {-3, 1, 2, 4, 5, 6, 7, 9, 10, 13, 14, 15, 17, 18, 19}, binTree.inOrder()));
+		
+		binTree.insert(8, v);
+		binTree.insert(50, v);
+		binTree.insert(-11, v);
+		binTree.insert(23, v);
+		assertEquals(19, binTree.size());
+		validate(new Comparable[] {-11, -3, 1, 2, 4, 5, 6, 7, 8, 9, 10, 13, 14, 15, 17, 18, 19, 23, 50}, binTree.inOrder());
 		
 	}
 	

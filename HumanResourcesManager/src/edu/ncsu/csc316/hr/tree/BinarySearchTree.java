@@ -277,11 +277,21 @@ public class BinarySearchTree<S extends Comparable<S>, T extends Comparable<T>> 
 				// If the node to delete is a leaf or doesn't have a left subtree
 				if ((this.left == null && this.right == null) || this.left == null) {
 					if (this.equals(parent.left)) {
-						parent.left = null;
+						// Check that the node doesn't have a right sub tree
+						if (this.right != null) {
+							parent.left = this.right;
+						} else {
+							parent.left = null;
+						}
 						size--;
 						return temp;
 					} else {
-						parent.right = null;
+						// Check that the node doesn't have a right sub tree
+						if (this.right != null) {
+							parent.right = this.right;
+						} else {
+							parent.right = null;
+						}
 						size--;
 						return temp;
 					}
