@@ -69,6 +69,8 @@ public class HumanResourcesManager {
 			}
 		}
 		
+		System.out.println("Size of resume dictionary: " + this.resumeDictionary.size());
+		
 		// Close the file scanner
 		resumes.close();
 		
