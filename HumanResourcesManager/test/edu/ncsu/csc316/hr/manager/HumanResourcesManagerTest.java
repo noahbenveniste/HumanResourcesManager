@@ -122,6 +122,16 @@ public class HumanResourcesManagerTest {
 		} catch (IllegalArgumentException e) {
 			assertEquals("Key is not contained in the BST", e.getMessage());
 		}
+		
+		hrm.removeEmployee("John", "Smith");
+		String exp2 = "OrganizationalProfile[\n" + 
+				"   Jane Doe\n" + 
+				"   Thomas Webb\n" + 
+				"   Suzanne Meadows\n" + 
+				"   Jessica Daniels\n" + 
+				"   Kyle DeMarcino\n" + 
+				"]";
+		assertEquals(exp2, hrm.generateOrganizationalProfile());
 	}
 	
 }

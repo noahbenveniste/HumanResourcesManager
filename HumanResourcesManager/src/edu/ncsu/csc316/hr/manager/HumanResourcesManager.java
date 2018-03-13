@@ -162,6 +162,7 @@ public class HumanResourcesManager {
 	public String removeEmployee(String first, String last) {
 	    // Search for the employee to remove. If they are not found, throw an exception
 		GeneralTree<Employee>.Node<Employee> e = null;
+		GeneralTree<Employee>.Node<Employee> parent = null;
 		
 		// Initialize queue for level-order traversal
 		LinkedQueue<GeneralTree<Employee>.Node<Employee>> q = new LinkedQueue<GeneralTree<Employee>.Node<Employee>>(1000);
@@ -183,6 +184,7 @@ public class HumanResourcesManager {
 			if (e.getData().getFirst().equals(first) && e.getData().getLast().equals(last)) {
 				break;
 			}
+			parent = e;
 			// Enqueue the node's children left to right
 			ArrayList<GeneralTree<Employee>.Node<Employee>> children = e.getChildren();
 			for (int i = 0; i < children.size(); i++) {
@@ -194,7 +196,7 @@ public class HumanResourcesManager {
 			// Call method that handles recursion
 			// TODO: need some way of only returning the name of the employee who directly
 			//		 replaced the removed employee
-			removeEmployeeHelper(e);
+			removeEmployeeHelper(e, parent);
 			// Remove the resume from the dictionary
 			resumeDictionary.remove(e.getData().getResID());
 			return new StringBuilder(e.getData().getFirst()).append(" ").append(e.getData().getLast()).toString();
@@ -209,11 +211,25 @@ public class HumanResourcesManager {
 	 * 
 	 * @param e the Node corresponding to the employee to remove
 	 */
-	private void removeEmployeeHelper(GeneralTree<Employee>.Node<Employee> e) {
+	private void removeEmployeeHelper(GeneralTree<Employee>.Node<Employee> e, GeneralTree<Employee>.Node<Employee> parent) {
+		// Check for case where e has no children, so just remove them
+		ArrayList<GeneralTree<Employee>.Node<Employee>> children = e.getChildren();
+		
+		if (children.size() == 0) {
+			ArrayList<GeneralTree<Employee>.Node<Employee>> parentChildren = parent.getChildren();
+			int j = 0;
+			for (int i = 0; i < parentChildren.size(); i++) {
+				if (parentChildren.get(i).getData().getFirst().equals(e.getData().getFirst()) && parentChildren.get(i).getData().getLast().equals(e.getData().getLast())) {
+					j = i;
+					break;
+				}
+			}
+			parentChildren.remove(j);
+			return;
+		}
+		
 		// Create a duplicate list of e's children
 		ArrayList<EmployeeSorter> sortedEmployees = new ArrayList<EmployeeSorter>();
-		
-		ArrayList<GeneralTree<Employee>.Node<Employee>> children = e.getChildren();
 		
 		// Loop through the child node list and do the following for each node:
 		// 1. Look up years of service and degree in dictionary
@@ -269,7 +285,7 @@ public class HumanResourcesManager {
 		   Else, just delete the employee's node and return. */
 		
 		if (promotedNode.getChildren().size() != 0) {
-			removeEmployeeHelper(promotedNode);
+			removeEmployeeHelper(promotedNode, e);
 			return;
 		} else {
 			e.getChildren().remove(idxToRemove);
