@@ -44,21 +44,19 @@ public class HumanResourcesManager {
 		resumeDictionary = new BinarySearchTree<Integer, Resume>();
 		
 		// Skip the first line of the resume file
-		String header = resumes.nextLine();
-		
-		System.out.println(header);
+		resumes.nextLine();
 		
 		// For each line in the file, create a resume object.
 		while(resumes.hasNextLine()) {
 			String curr = resumes.nextLine();
 			Scanner resume = new Scanner(curr);
-			resume.useDelimiter(", ");
+			resume.useDelimiter(",");
 			
 			// TODO: possible performance improvements when reading in resume dictionary
 			try {
-				String id = resume.next();
-				int years = resume.nextInt();
-				char degree = resume.next().charAt(0);
+				String id = resume.next().trim();
+				int years = Integer.parseInt((resume.next().trim()));
+				char degree = resume.next().trim().charAt(0);
 				
 				Resume r = new Resume(id, years, degree);
 				
