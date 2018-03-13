@@ -44,9 +44,9 @@ public class HumanResourcesManager {
 		resumeDictionary = new BinarySearchTree<Integer, Resume>();
 		
 		// Skip the first line of the resume file
-		resumes.nextLine();
+		String header = resumes.nextLine();
 		
-		int lineCount = 0;
+		System.out.println(header);
 		
 		// For each line in the file, create a resume object.
 		while(resumes.hasNextLine()) {
@@ -66,13 +66,10 @@ public class HumanResourcesManager {
 				resumeDictionary.insert(r.getResID(), r);
 				// Close the scanner for the line
 				resume.close();
-				lineCount++;
 			} catch (NoSuchElementException e) {
 				// Do nothing
 			}
 		}
-		
-		System.out.println(lineCount);
 		
 		// Close the file scanner
 		resumes.close();
