@@ -199,7 +199,7 @@ public class HumanResourcesManager {
 			removeEmployeeHelper(e, parent);
 			// Remove the resume from the dictionary
 			if (!resumeDictionary.isEmpty()) {
-				resumeDictionary.remove(e.getData().getResID());
+//				resumeDictionary.remove(e.getData().getResID());
 			}
 			return new StringBuilder(e.getData().getFirst()).append(" ").append(e.getData().getLast()).toString();
 		} else {
