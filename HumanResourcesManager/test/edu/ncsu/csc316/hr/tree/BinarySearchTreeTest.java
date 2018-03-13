@@ -93,7 +93,7 @@ public class BinarySearchTreeTest {
 		binTree.insert(9, "rat");
 		
 		// Remove root
-		binTree.remove(5);
+		assertEquals("fox", binTree.remove(5));
 		assertEquals(8, binTree.size());
 		String[] r1 = {"ape", "bird", "cat", "dog", null, "goat", "hen", "pig", "rat"};
 		for (int i = 0; i < r1.length; i++) {
@@ -103,7 +103,7 @@ public class BinarySearchTreeTest {
 		}
 		
 		// Remove a middle value
-		binTree.remove(2);
+		assertEquals("bird", binTree.remove(2));
 		assertEquals(7, binTree.size());
 		String[] r2 = {"ape", null, "cat", "dog", null, "goat", "hen", "pig", "rat"};
 		for (int i = 0; i < r2.length; i++) {
@@ -112,7 +112,7 @@ public class BinarySearchTreeTest {
 			}
 		}
 		
-		binTree.remove(9);
+		assertEquals("rat", binTree.remove(9));
 		assertEquals(6, binTree.size());
 		String[] r3 = {"ape", null, "cat", "dog", null, "goat", "hen", "pig", null};
 		for (int i = 0; i < r3.length; i++) {
@@ -121,7 +121,7 @@ public class BinarySearchTreeTest {
 			}
 		}
 		
-		binTree.remove(8);
+		assertEquals("pig", binTree.remove(8));
 		assertEquals(5, binTree.size());
 		String[] r4 = {"ape", null, "cat", "dog", null, "goat", "hen", null, null};
 		for (int i = 0; i < r4.length; i++) {
@@ -130,7 +130,7 @@ public class BinarySearchTreeTest {
 			}
 		}
 		
-		binTree.remove(7);
+		assertEquals("hen", binTree.remove(7));
 		assertEquals(4, binTree.size());
 		String[] r5 = {"ape", null, "cat", "dog", null, "goat", null, null, null};
 		for (int i = 0; i < r5.length; i++) {
@@ -139,7 +139,7 @@ public class BinarySearchTreeTest {
 			}
 		}
 		
-		binTree.remove(6);
+		assertEquals("goat", binTree.remove(6));
 		assertEquals(3, binTree.size());
 		String[] r6 = {"ape", null, "cat", "dog", null, null, null, null, null};
 		for (int i = 0; i < r6.length; i++) {
@@ -148,7 +148,7 @@ public class BinarySearchTreeTest {
 			}
 		}
 		
-		binTree.remove(1);
+		assertEquals("ape", binTree.remove(1));
 		assertEquals(2, binTree.size());
 		String[] r7 = {null, null, "cat", "dog", null, null, null, null, null};
 		for (int i = 0; i < r7.length; i++) {
@@ -157,7 +157,7 @@ public class BinarySearchTreeTest {
 			}
 		}
 		
-		binTree.remove(4);
+		assertEquals("dog", binTree.remove(4));
 		assertEquals(1, binTree.size());
 		String[] r8 = {null, null, "cat", null, null, null, null, null, null};
 		for (int i = 0; i < r8.length; i++) {
@@ -166,10 +166,8 @@ public class BinarySearchTreeTest {
 			}
 		}
 		
-		binTree.remove(3);
+		assertEquals("cat", binTree.remove(3));
 		assertEquals(0, binTree.size());
-		
-		
 	}
 
 }
