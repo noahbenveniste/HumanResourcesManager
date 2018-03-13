@@ -217,14 +217,12 @@ public class HumanResourcesManager {
 		
 		if (children.size() == 0) {
 			ArrayList<GeneralTree<Employee>.Node<Employee>> parentChildren = parent.getChildren();
-			int j = 0;
 			for (int i = 0; i < parentChildren.size(); i++) {
 				if (parentChildren.get(i).getData().getFirst().equals(e.getData().getFirst()) && parentChildren.get(i).getData().getLast().equals(e.getData().getLast())) {
-					j = i;
+					parentChildren.remove(i);
 					break;
 				}
 			}
-			parentChildren.remove(j);
 			return;
 		}
 		
