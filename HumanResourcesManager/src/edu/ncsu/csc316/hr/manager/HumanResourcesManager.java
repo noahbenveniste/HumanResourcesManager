@@ -37,7 +37,7 @@ public class HumanResourcesManager {
 		try {
 			resumes = new Scanner(new FileInputStream(pathToResumeFile));
 		} catch (FileNotFoundException e) {
-			throw new IllegalArgumentException("Employee file not found.");
+			throw new IllegalArgumentException("Resume file not found.");
 		}
 		
 		// Initialize empty BST with resume ID (int) as the key and Resume objects as the value
@@ -45,6 +45,8 @@ public class HumanResourcesManager {
 		
 		// Skip the first line of the resume file
 		resumes.nextLine();
+		
+		int lineCount = 0;
 		
 		// For each line in the file, create a resume object.
 		while(resumes.hasNextLine()) {
@@ -64,12 +66,13 @@ public class HumanResourcesManager {
 				resumeDictionary.insert(r.getResID(), r);
 				// Close the scanner for the line
 				resume.close();
+				lineCount++;
 			} catch (NoSuchElementException e) {
 				// Do nothing
 			}
 		}
 		
-		System.out.println("Size of resume dictionary: " + this.resumeDictionary.size());
+		System.out.println(lineCount);
 		
 		// Close the file scanner
 		resumes.close();
