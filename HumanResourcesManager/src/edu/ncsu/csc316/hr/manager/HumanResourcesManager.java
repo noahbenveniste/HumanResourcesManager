@@ -221,18 +221,7 @@ public class HumanResourcesManager {
 	private void removeEmployeeHelper(GeneralTree<Employee>.Node<Employee> e, GeneralTree<Employee>.Node<Employee> parent) {
 		// Check for case where e has no children, so just remove them
 		ArrayList<GeneralTree<Employee>.Node<Employee>> children = e.getChildren();
-		
-//		if (children.size() == 0) {
-//			ArrayList<GeneralTree<Employee>.Node<Employee>> parentChildren = parent.getChildren();
-//			for (int i = 0; i < parentChildren.size(); i++) {
-//				if (parentChildren.get(i).getData().getFirst().equals(e.getData().getFirst()) && parentChildren.get(i).getData().getLast().equals(e.getData().getLast())) {
-//					parentChildren.remove(i);
-//					break;
-//				}
-//			}
-//			return;
-//		}
-//		
+	
 		// Create a duplicate list of e's children
 		ArrayList<EmployeeSorter> sortedEmployees = new ArrayList<EmployeeSorter>();
 		
