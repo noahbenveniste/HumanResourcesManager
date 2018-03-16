@@ -18,7 +18,7 @@ public class ArrayList<E extends Comparable<E>> {
 	/**
 	 * The array's current size, based on the number of non-null elements present
 	 */
-	private static final int INIT_SIZE = 10;
+	private static final int INIT_SIZE = 3000;
 	/** The underlying array for the ArrayList */
 	private E[] list;
 	/** The number of elements that has been placed in the array */
