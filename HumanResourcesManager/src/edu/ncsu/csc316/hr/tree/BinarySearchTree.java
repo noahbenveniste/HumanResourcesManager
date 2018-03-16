@@ -100,6 +100,7 @@ public class BinarySearchTree<S extends Comparable<S>, T extends Comparable<T>> 
 	 * 
 	 */
 	public T remove(S k) {
+		
 		/* REMOVE ALGORITHM */
 		// 1. Find the node corresponding to the searched key
 		// 2. Find the largest element in the left subtree of the node
@@ -147,6 +148,17 @@ public class BinarySearchTree<S extends Comparable<S>, T extends Comparable<T>> 
 		}
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
+	public Node<S, T> getMaxNode(Node<S, T> curr) {
+		if (curr.right == null) {
+			return curr;
+		} else {
+			return getMaxNode(curr.right);
+		}
+	}
 
 	/**
 	 * 
@@ -161,18 +173,6 @@ public class BinarySearchTree<S extends Comparable<S>, T extends Comparable<T>> 
 	 */
 	public int size() {
 		return size;
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public Node<S, T> getMaxNode(Node<S, T> curr) {
-		if (curr.right == null) {
-			return curr;
-		} else {
-			return getMaxNode(curr.right);
-		}
 	}
 	
 	/**

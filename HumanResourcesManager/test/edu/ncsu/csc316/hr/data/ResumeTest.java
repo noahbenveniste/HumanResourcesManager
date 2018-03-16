@@ -5,13 +5,14 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 /**
+ * Unit tests for Resume objects
  * 
  * @author Noah Benveniste
  */
 public class ResumeTest {
 
 	/**
-	 * 
+	 * Tests compareTo()
 	 */
 	@Test
 	public void testCompareTo() {

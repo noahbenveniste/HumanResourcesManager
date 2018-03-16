@@ -1,21 +1,35 @@
 package edu.ncsu.csc316.hr.data;
 
 /**
- * An object used to store employee data for sorting to determine
- * the employee to be promoted out of a group.
+ * An object that combines information from a given Employee object
+ * in the company hierarchy tree and information from the Resume
+ * dictionary to allow for easy sorting when selecting an interim
+ * supervisor for promotion.
  * 
  * @author Noah Benveniste
  */
 public class EmployeeSorter implements Comparable<EmployeeSorter> {
 
+	/** The Employee's number of years of experience; from the resume dictionary */
 	private int years;
+	/** The number of direct subordinates the Employee oversees; from the Employee's node in the GeneralTree */
 	private int numSubordinates;
+	/** An integer corresponding to the Employee's highest degree; from the resume dictionary */
 	private int degree;
+	/** The Employee's last name */
 	private String last;
+	/** The Employee's first name */
 	private String first;
 	
 	/**
+	 * Constructs an EmployeeSorter object given an Employee's years of experience, number
+	 * of direct subordinates, degree level, last name and first name.
 	 * 
+	 * @param years years of experience
+	 * @param numSubordinates number of direct subordinates
+	 * @param degree 0 = none, 1 = associate's, 2 = BA, 3 = MA, 4 = PhD
+	 * @param last last name
+	 * @param first first name
 	 */
 	public EmployeeSorter(int years, int numSubordinates, int degree, String last, String first) {
 		this.years = years;
@@ -26,6 +40,8 @@ public class EmployeeSorter implements Comparable<EmployeeSorter> {
 	}
 
 	/**
+	 * Gets the years of experience
+	 * 
 	 * @return the years
 	 */
 	public int getYears() {
@@ -33,6 +49,8 @@ public class EmployeeSorter implements Comparable<EmployeeSorter> {
 	}
 
 	/**
+	 * Gets the number of subordinates
+	 * 
 	 * @return the numSubordinates
 	 */
 	public int getNumSubordinates() {
@@ -40,6 +58,8 @@ public class EmployeeSorter implements Comparable<EmployeeSorter> {
 	}
 
 	/**
+	 * Gets the degree
+	 * 
 	 * @return the degree
 	 */
 	public int getDegree() {
@@ -47,14 +67,18 @@ public class EmployeeSorter implements Comparable<EmployeeSorter> {
 	}
 
 	/**
-	 * @return the last
+	 * Gets the last name
+	 * 
+	 * @return the last name
 	 */
 	public String getLast() {
 		return last;
 	}
 
 	/**
-	 * @return the first
+	 * Gets the first name
+	 * 
+	 * @return the first name
 	 */
 	public String getFirst() {
 		return first;

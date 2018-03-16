@@ -5,13 +5,14 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 /**
+ * Unit tests for precedence functionality of EmployeeSorter objects
  * 
  * @author Noah Benveniste
  */
 public class EmployeeSorterTest {
 
 	/**
-	 * 
+	 * Tests the ordering of employee sorters
 	 */
 	@Test
 	public void testCompareTo() {

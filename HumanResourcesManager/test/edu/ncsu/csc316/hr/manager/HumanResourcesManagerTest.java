@@ -2,24 +2,16 @@ package edu.ncsu.csc316.hr.manager;
 
 import static org.junit.Assert.*;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import edu.ncsu.csc316.hr.data.Resume;
 
 /**
+ * Unit tests for the HumanResourcesManager class.
  * 
  * @author Noah Benveniste
  */
 public class HumanResourcesManagerTest {
-
-	/**
-	 * 
-	 * @throws Exception
-	 */
-	@Before
-	public void setUp() throws Exception {
-	}
 
 	/**
 	 * Tests construction of the HumanResourcesManager as well as the
@@ -100,7 +92,8 @@ public class HumanResourcesManagerTest {
 	}
 	
 	/**
-	 * 
+	 * Tests the functionality for removing a given employee from the hierarchy and having all
+	 * openings automatically filled by interim supervisors.
 	 */
 	@Test
 	public void testRemoveEmployee() {
@@ -132,6 +125,19 @@ public class HumanResourcesManagerTest {
 				"   Kyle DeMarcino\n" + 
 				"]";
 		assertEquals(exp2, hrm.generateOrganizationalProfile());
+		
+		hrm = null;
+		
+		hrm = new HumanResourcesManager("input/short-employees.txt", "input/short-resumes.txt");
+		String exp3 = "OrganizationalProfile[\n" +
+				      "   Lloyd Davids\n" +
+				      "   Josef Yang\n" + 
+				      "   Donny Francisco\n" +
+				      "]";
+		String result = hrm.removeEmployee("Bianca", "Smith");
+		assertEquals("Lloyd Davids", result);
+		assertEquals(exp3, hrm.generateOrganizationalProfile());
+		
 	}
 	
 }

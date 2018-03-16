@@ -79,7 +79,8 @@ public class ArrayList<E extends Comparable<E>> {
 	
 	/**
 	 * Appends an element to the end of the list
-	 * @param element
+	 * 
+	 * @param element the element to add
 	 */
 	public void add(E element) {
 		if (this.size() == this.capacity) { // Grow the array if list is full

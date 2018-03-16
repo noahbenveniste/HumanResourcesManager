@@ -7,6 +7,7 @@ import edu.ncsu.csc316.hr.list.ArrayList;
  * @author Noah Benveniste
  */
 public class GeneralTree<E extends Comparable<E>> {
+	
 	/** */
 	private Node<E> root;
 	/** */
@@ -45,6 +46,7 @@ public class GeneralTree<E extends Comparable<E>> {
 	 * 
 	 * @author Noah Benveniste
 	 */
+	@SuppressWarnings("hiding")
 	public class Node<E> implements Comparable<Node<E>>{
 		/** */
 		private E data;

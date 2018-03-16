@@ -2,17 +2,17 @@ package edu.ncsu.csc316.hr.tree;
 
 import static org.junit.Assert.*;
 
-import org.junit.Before;
 import org.junit.Test;
 
 /**
+ * Unit tests for the GeneralTree class
  * 
  * @author Noah Benveniste
  */
 public class GeneralTreeTest {
 
 	/**
-	 * 
+	 * Tests compareTo()
 	 */
 	@Test
 	public void testCompareTo() {

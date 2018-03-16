@@ -12,9 +12,11 @@ import edu.ncsu.csc316.hr.tree.*;
 
 /**
  * 
+ * 
  * @author Noah Benveniste
  */
 public class HumanResourcesManager {
+	
 	/** */
 	private BinarySearchTree<Integer, Resume> resumeDictionary;
 	/** */
@@ -116,6 +118,8 @@ public class HumanResourcesManager {
 	private void buildTreeHelper(Scanner empHierarchy, GeneralTree<Employee>.Node<Employee> parent) {
 		/* For each employee read in, build an employee object by reading the line */
 		
+		System.out.printf("Employee tree size: %d\n", this.employees.size());
+		
 		GeneralTree<Employee>.Node<Employee> lastChildInstantiated = null;
 		
 		// Try to parse the next line of input. Catch and handle NSE exceptions. If there are no
@@ -197,10 +201,9 @@ public class HumanResourcesManager {
 			}
 		}
 		
+		// Check for null pointer
 		if (e != null) {
 			// Call method that handles recursion
-			// TODO: need some way of only returning the name of the employee who directly
-			//		 replaced the removed employee
 			removeEmployeeHelper(e, parent);
 			// Remove the resume from the dictionary
 			if (!resumeDictionary.isEmpty()) {
@@ -222,10 +225,12 @@ public class HumanResourcesManager {
 		// Check for case where e has no children, so just remove them
 		ArrayList<GeneralTree<Employee>.Node<Employee>> children = e.getChildren();
 		
+		// For the case where an employee being removed is a leaf i.e. they have no subordinates to replace them
 		if (children.size() == 0) {
 			ArrayList<GeneralTree<Employee>.Node<Employee>> parentChildren = parent.getChildren();
 			for (int i = 0; i < parentChildren.size(); i++) {
-				if (parentChildren.get(i).getData().getFirst().equals(e.getData().getFirst()) && parentChildren.get(i).getData().getLast().equals(e.getData().getLast())) {
+				if (parentChildren.get(i).getData().getFirst().equals(e.getData().getFirst()) 
+						&& parentChildren.get(i).getData().getLast().equals(e.getData().getLast())) {
 					parentChildren.remove(i);
 					break;
 				}
@@ -236,13 +241,6 @@ public class HumanResourcesManager {
 		// Create a duplicate list of e's children
 		ArrayList<EmployeeSorter> sortedEmployees = new ArrayList<EmployeeSorter>();
 		
-		// Loop through the child node list and do the following for each node:
-		// 1. Look up years of service and degree in dictionary
-		// 2. Get the number of immediate children of the current node
-		// 3. Somehow add this information to each element of the duplicate list
-			// TODO: add additional fields to the node class to store the above info
-		// 4. Sort the duplicate list
-			// TODO: add an optimized compareTo method for Employees
 		for (int i = 0; i < children.size(); i++) {
 			// Current child being examined
 			GeneralTree<Employee>.Node<Employee> curr = children.get(i);
@@ -302,7 +300,7 @@ public class HumanResourcesManager {
 	 * Returns the string representation of the organizational
 	 * profile of the company using the given input employee file.
 	 * 
-	 * @return the organizational profile
+	 * @return the organizational profile as a single string
 	 */
 	public String generateOrganizationalProfile() {
 		// Initialize queue
@@ -342,16 +340,20 @@ public class HumanResourcesManager {
 	}
 	
 	/**
+	 * Gets the resume dictionary for the HRManager; used primarily
+	 * for unit testing
 	 * 
-	 * @return
+	 * @return the resume dictionary
 	 */
 	public BinarySearchTree<Integer, Resume> getResumeDictionary() {
 		return this.resumeDictionary;
 	}
 	
 	/**
+	 * Gets the company hierarchy tree for the HRManager; used primarily
+	 * for unit testing
 	 * 
-	 * @return
+	 * @return the employee hierarchy tree
 	 */
 	public GeneralTree<Employee> getEmployees() {
 		return this.employees;

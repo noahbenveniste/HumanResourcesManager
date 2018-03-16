@@ -2,17 +2,17 @@ package edu.ncsu.csc316.hr.data;
 
 import static org.junit.Assert.*;
 
-import org.junit.Before;
 import org.junit.Test;
 
 /**
+ * Unit tests for Employee objects
  * 
  * @author Noah Benveniste
  */
 public class EmployeeTest {
 
 	/**
-	 * 
+	 * Tests compareTo()
 	 */
 	@Test
 	public void testCompareTo() {

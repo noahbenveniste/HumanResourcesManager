@@ -310,4 +310,5 @@ public class LinkedAbstractListTest {
 		
 		assertEquals(5, s.size());
 	}
+	
 }
