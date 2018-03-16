@@ -11,7 +11,7 @@ public class LinkedAbstractList<E> {
 
 	/** Reference that points to the node at the front of the list */
 	private ListNode front;
-	/** */
+	/** Reference to the last node in the list */
 	private ListNode back;
 	/** The number of elements in the list */
 	private int size;
@@ -26,8 +26,6 @@ public class LinkedAbstractList<E> {
 	public LinkedAbstractList(int capacity) {
 		if (capacity < 0) {
 			throw new IllegalArgumentException("Capacity cannot be less than zero.");
-		} else if (capacity < this.size) {
-			throw new IllegalArgumentException("Capacity cannot be less than current list's size.");
 		}
 		this.front = null;
 		this.back = null;
@@ -172,6 +170,9 @@ public class LinkedAbstractList<E> {
 	
 	/**
 	 * Gets the element in the list at a specified index
+	 * 
+	 * @param idx the index of the element to get
+	 * 
 	 * @return the element at the specified index
 	 * @throws IndexOutOfBoundsException if the specified index is less than zero or greater than
 	 * or equal to the list's size

@@ -19,7 +19,11 @@ public class Resume implements Comparable<Resume> {
 	
 
 	/**
+	 * Constructs a Resume object
 	 * 
+	 * @param resID the resume ID
+	 * @param years the number of years of experience
+	 * @param degree a letter corresponding to the employee's college degree
 	 */
 	public Resume(String resID, int years, char degree) {
 		this.resID = Integer.parseInt(resID.substring(1));
@@ -38,6 +42,8 @@ public class Resume implements Comparable<Resume> {
 	}
 
 	/**
+	 * Gets the resume ID
+	 * 
 	 * @return the resID
 	 */
 	public int getResID() {
@@ -45,6 +51,8 @@ public class Resume implements Comparable<Resume> {
 	}
 
 	/**
+	 * Gets the years of service
+	 * 
 	 * @return the years
 	 */
 	public int getYears() {
@@ -52,6 +60,8 @@ public class Resume implements Comparable<Resume> {
 	}
 
 	/**
+	 * Gets the degree
+	 * 
 	 * @return the degree
 	 */
 	public int getDegree() {
@@ -59,9 +69,11 @@ public class Resume implements Comparable<Resume> {
 	}
 
 	/**
+	 * Compares two resumes based on their ID numbers
 	 * 
-	 * @param o
-	 * @return
+	 * @param r the other resume to compare to
+	 * @return a positive int if o is less than this, negative if this is less
+	 *         than o, zero if they are equal
 	 */
 	@Override
 	public int compareTo(Resume r) {

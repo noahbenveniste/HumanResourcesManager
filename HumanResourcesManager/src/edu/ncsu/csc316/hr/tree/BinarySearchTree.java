@@ -1,24 +1,28 @@
 package edu.ncsu.csc316.hr.tree;
 
 /**
+ * A binary search tree class. Utilizes a linked node structure to achieve
+ * best case O(logn) insert/lookup/remove operations. Can be used to implement
+ * ordered dictionaries.
  * 
  * @author Noah Benveniste
  *
- * @param <S, T>
+ * @param <S> generic type for key
+ * @param <T> generic type for value
  */
 public class BinarySearchTree<S extends Comparable<S>, T extends Comparable<T>> {
 	
-	/** */
+	/** Root node for the tree */
 	private Node<S, T> root;
-	/** */
+	/** The number of elements in the tree */
 	private int size;
-	/** */
+	/** Used to store the keys of the tree after an in-order traversal */
 	private S[] inOrderKeys;
-	/** */
+	/** Used as a counter variable for the recursive in-order traversal code */
 	private int i;
 
 	/**
-	 * 
+	 * Constructs an empty BST with a null root
 	 */
 	public BinarySearchTree() {
 		this.root = null;
@@ -26,9 +30,11 @@ public class BinarySearchTree<S extends Comparable<S>, T extends Comparable<T>> 
 	}
 
 	/**
+	 * Given a key, returns the corresponding value in the tree if it is found
 	 * 
-	 * @param k
-	 * @return
+	 * @param k the input key
+	 * 
+	 * @return the value corresponding to the key/value pair
 	 */
 	public T lookUp(S k) {
 		if (isEmpty()) {
@@ -41,7 +47,10 @@ public class BinarySearchTree<S extends Comparable<S>, T extends Comparable<T>> 
 	}
 
 	/**
+	 * Inserts a key/value pair into the tree in sorted order
 	 * 
+	 * @param k the key
+	 * @param v the value
 	 */
 	public void insert(S k, T v) {
 		// If the tree is empty, create a new root.
@@ -72,13 +81,12 @@ public class BinarySearchTree<S extends Comparable<S>, T extends Comparable<T>> 
 	}
 	
 	/**
+	 * Recursive helper method for the in order traversal
 	 * 
-	 * @return
+	 * @return The keys in the tree in sorted order in an array
 	 */
 	private S[] inOrderHelper(Node<S, T> n) {
-		if (n == null) {
-			// Do nothing
-		} else {
+		if (n != null) {
 			inOrderHelper(n.left);
 			visit(n);
 			inOrderHelper(n.right);
@@ -87,8 +95,10 @@ public class BinarySearchTree<S extends Comparable<S>, T extends Comparable<T>> 
 	}
 	
 	/**
+	 * Used by the in-order traversal code; adds each element to the
+	 * out array after being visited
 	 * 
-	 * @param n
+	 * @param n the node in the tree being examined
 	 */
 	private void visit(Node<S, T> n) {
 		inOrderKeys[i] = n.key;
@@ -97,7 +107,12 @@ public class BinarySearchTree<S extends Comparable<S>, T extends Comparable<T>> 
 	
 
 	/**
+	 * Given a key, removes the key/value pair from the tree if they exist
+	 * and returns the value.
 	 * 
+	 * @param k the key to search for removal
+	 * 
+	 * @return the value corresponding to the input key
 	 */
 	public T remove(S k) {
 		
@@ -149,8 +164,12 @@ public class BinarySearchTree<S extends Comparable<S>, T extends Comparable<T>> 
 	}
 	
 	/**
+	 * Helper method for remove functionality. Gets the largest node
+	 * in the passed subtree.
 	 * 
-	 * @return
+	 * @param curr the current node being recursively examined
+	 * 
+	 * @return the largest (right-most) node in the subtree
 	 */
 	public Node<S, T> getMaxNode(Node<S, T> curr) {
 		if (curr.right == null) {
@@ -161,43 +180,52 @@ public class BinarySearchTree<S extends Comparable<S>, T extends Comparable<T>> 
 	}
 
 	/**
+	 * Checks if the tree has an elements
 	 * 
+	 * @return true if the tree is empty, false otherwise
 	 */
 	public boolean isEmpty() {
 		return size == 0;
 	}
 
 	/**
+	 * Gets the number of elements in the tree
 	 * 
-	 * @return
+	 * @return the number of elements in the tree
 	 */
 	public int size() {
 		return size;
 	}
 	
 	/**
+	 * The underlying node objects that comprise the BST. Also several
+	 * recursive helper functions for insert, remove and lookup.
 	 * 
 	 * @author Noah Benveniste
 	 *
-	 * @param <E>
+	 * @param <S> generic type for key
+	 * @param <T> generic type for value
 	 */
 	@SuppressWarnings("hiding")
 	private class Node<S extends Comparable<S>, T extends Comparable<T>> {
 		
-		/** */
+		/** Left child of the node */
 		public Node<S, T> left;
-		/** */
+		/** Right child of the node */
 		public Node<S, T> right;
-		/** */
+		/** Data key */
 		public S key;
-		/** */
+		/** Data value */
 		public T value;
 		
 		/**
+		 * Constructs a node given a key/value pair, a left child node
+		 * and a right child node
 		 * 
-		 * @param data
-		 * @param left
-		 * @param right
+		 * @param k the key
+		 * @param v the value
+		 * @param left the left child
+		 * @param right the right child
 		 */
 		public Node(S k, T v, Node<S, T> left, Node<S, T> right) {
 			
@@ -208,17 +236,21 @@ public class BinarySearchTree<S extends Comparable<S>, T extends Comparable<T>> 
 		}
 		
 		/**
+		 * Constructs a node given only a key/value pair with no children
+		 * (i.e. leaf node)
 		 * 
-		 * @param data
+		 * @param k the key
+		 * @param v the value
 		 */
 		public Node(S k, T v) {
 			this(k, v, null, null);
 		}
 		
 		/**
+		 * Recursive helper method for insert functionality
 		 * 
-		 * @param k
-		 * @param v
+		 * @param k the key to insert
+		 * @param v the corresponding value to insert
 		 */
 		private void insertHelper(S k, T v) {
 			if (this.key.compareTo(k) > 0) {
@@ -243,9 +275,11 @@ public class BinarySearchTree<S extends Comparable<S>, T extends Comparable<T>> 
 		}
 		
 		/**
+		 * Recursive helper method for lookup functionality
 		 * 
-		 * @param k
-		 * @return
+		 * @param k the key to search
+		 * 
+		 * @return the corresponding value if the key is found in the tree
 		 */
 		private T lookUpHelper(S k) {
 			if (this.key.equals(k)) {
@@ -266,9 +300,11 @@ public class BinarySearchTree<S extends Comparable<S>, T extends Comparable<T>> 
 		}
 		
 		/**
+		 * Recursive helper method for remove functionality
 		 * 
-		 * @param k
-		 * @return
+		 * @param k the key corresponding to the key/value pair to be removed
+		 * 
+		 * @return the value associated with the removed k/v pair
 		 */
 		private T removeHelper(S k, Node<S, T> parent) {
 			if (this.key.equals(k)) {
@@ -341,8 +377,10 @@ public class BinarySearchTree<S extends Comparable<S>, T extends Comparable<T>> 
 		}
 		
 		/**
+		 * Helper method for remove functionality. Gets the largest node
+		 * in the passed subtree.
 		 * 
-		 * @return
+		 * @return the largest (right-most) node in the subtree
 		 */
 		public Node<S, T> getMaxNode(Node<S, T> curr) {
 			if (curr.right == null) {

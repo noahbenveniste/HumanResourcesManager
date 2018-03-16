@@ -166,6 +166,8 @@ public class ArrayList<E extends Comparable<E>> {
 	/**
 	 * Gets an element at a specified index
 	 * 
+	 * @param idx the index of the element to get
+	 * 
 	 * @return the element at the specified index
 	 * @throws IndexOutOfBoundsException
 	 *             if the specified index is out of bounds

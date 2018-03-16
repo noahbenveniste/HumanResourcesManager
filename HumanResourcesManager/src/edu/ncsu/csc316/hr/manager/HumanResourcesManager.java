@@ -11,15 +11,19 @@ import edu.ncsu.csc316.hr.list.ArrayList;
 import edu.ncsu.csc316.hr.tree.*;
 
 /**
- * 
+ * Class that maintains an ordered dictionary of employee resume
+ * data as well as maintains the company hierarchy. Also handles
+ * functionality for removing a given employee and choosing employee(s)
+ * to be automatically promoted as interim supervisors to fill
+ * resulting vacancies.
  * 
  * @author Noah Benveniste
  */
 public class HumanResourcesManager {
 	
-	/** */
+	/** The dictionary containing employee resume records */
 	private BinarySearchTree<Integer, Resume> resumeDictionary;
-	/** */
+	/** The general tree that maintains the company hierarchy */
 	private GeneralTree<Employee> employees;
 
 	/**
@@ -54,10 +58,9 @@ public class HumanResourcesManager {
 			Scanner resume = new Scanner(curr);
 			resume.useDelimiter(",");
 			
-			// TODO: possible performance improvements when reading in resume dictionary
 			try {
 				String id = resume.next().trim();
-				int years = Integer.parseInt((resume.next().trim()));
+				int years = Integer.parseInt(resume.next().trim());
 				char degree = resume.next().trim().charAt(0);
 				
 				Resume r = new Resume(id, years, degree);
@@ -89,7 +92,9 @@ public class HumanResourcesManager {
 	}
 	
 	/**
+	 * Generates the employee hierarchy tree
 	 * 
+	 * @param empHierarchy a scanner linked to the input file of employees
 	 */
 	private void buildTree(Scanner empHierarchy) {
 		// First employee in file should be the root of the tree
@@ -111,9 +116,10 @@ public class HumanResourcesManager {
 	}
 	
 	/**
+	 * Recursive helper method for building employee hierarchy tree
 	 * 
-	 * @param empHierarchy
-	 * @param parent
+	 * @param empHierarchy scanner used for processing input file of employees
+	 * @param parent the parent employee of the employee to be created on the current line of the file
 	 */
 	private void buildTreeHelper(Scanner empHierarchy, GeneralTree<Employee>.Node<Employee> parent) {
 		/* For each employee read in, build an employee object by reading the line */
@@ -170,6 +176,7 @@ public class HumanResourcesManager {
 	    // Search for the employee to remove. If they are not found, throw an exception
 		GeneralTree<Employee>.Node<Employee> e = null;
 		GeneralTree<Employee>.Node<Employee> parent = null;
+		boolean found = false;
 		
 		// Initialize queue for level-order traversal
 		LinkedQueue<GeneralTree<Employee>.Node<Employee>> q = new LinkedQueue<GeneralTree<Employee>.Node<Employee>>(1000);
@@ -189,6 +196,7 @@ public class HumanResourcesManager {
 			e = q.dequeue();
 			// Process the node's data
 			if (e.getData().getFirst().equals(first) && e.getData().getLast().equals(last)) {
+				found = true;
 				break;
 			}
 			parent = e;
@@ -200,7 +208,7 @@ public class HumanResourcesManager {
 		}
 		
 		// Check for null pointer
-		if (e != null) {
+		if (found) {
 			// Call method that handles recursion
 			removeEmployeeHelper(e, parent);
 			// Remove the resume from the dictionary
@@ -220,6 +228,10 @@ public class HumanResourcesManager {
 	 * @param e the Node corresponding to the employee to remove
 	 */
 	private void removeEmployeeHelper(GeneralTree<Employee>.Node<Employee> e, GeneralTree<Employee>.Node<Employee> parent) {
+		if (e == null) {
+			throw new IllegalArgumentException("Null employee passed");
+		}
+		
 		// Check for case where e has no children, so just remove them
 		ArrayList<GeneralTree<Employee>.Node<Employee>> children = e.getChildren();
 		
@@ -274,6 +286,10 @@ public class HumanResourcesManager {
 				idxToRemove = i;
 				break;
 			}
+		}
+		
+		if (promotedNode == null) {
+			throw new IllegalArgumentException("Promoted employee not found in child list");
 		}
 		
 		// Overwrite the data in the passed node with the data of the promoted employee node
