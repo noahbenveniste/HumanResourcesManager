@@ -1,8 +1,8 @@
 package edu.ncsu.csc316.hr.ui;
 
 /**
- * @author Noah
- *
+ * 
+ * @author Noah Benveniste
  */
 public class HumanResourcesManagerUI {
 

@@ -2,6 +2,9 @@ package edu.ncsu.csc316.hr.list;
 
 import static org.junit.Assert.*;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
 import org.junit.Test;
 
 /**
@@ -347,6 +350,34 @@ public class ArrayListTest {
         for (int i = 0; i < expected2.length; i++) {
             assertEquals(expected2[i], list.get(i));
         }
+    }
+    
+    /**
+     * Tests growArray()
+     */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+	@Test
+    public void testGrowArray() {
+        ArrayList<Integer> a = new ArrayList<Integer>();
+        Class c = a.getClass();
+        Method method = null;
+        try {
+            method = c.getDeclaredMethod("growArray", null);
+        } catch (NoSuchMethodException | SecurityException e) {
+            fail(e.getMessage());
+        }
+        assertNotNull(method);
+        method.setAccessible(true);
+        try {
+            method.invoke(a, null);
+        } catch (IllegalAccessException e) {
+            fail(e.getMessage());
+        } catch (IllegalArgumentException e) {
+            fail(e.getMessage());
+        } catch (InvocationTargetException e) {
+            fail(e.getMessage());
+        }
+        assertTrue(a.size() == 0);
     }
     
 }

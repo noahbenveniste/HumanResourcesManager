@@ -118,8 +118,6 @@ public class HumanResourcesManager {
 	private void buildTreeHelper(Scanner empHierarchy, GeneralTree<Employee>.Node<Employee> parent) {
 		/* For each employee read in, build an employee object by reading the line */
 		
-		System.out.printf("Employee tree size: %d\n", this.employees.size());
-		
 		GeneralTree<Employee>.Node<Employee> lastChildInstantiated = null;
 		
 		// Try to parse the next line of input. Catch and handle NSE exceptions. If there are no
